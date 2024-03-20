@@ -51,3 +51,63 @@ function handleCourseSelection(ev) {
   populateCourseDetails(courseId);
 }
 
+async function populateCourseDetails(courseId) {
+    currentCourseId = courseId;
+    let details = courseDetails[courseId];
+    if (!details) {
+      details = await getGolfCourseDetails(courseId);
+    }
+    populateTeeBoxSelect(details.holes[0].teeBoxes);
+  }
+  
+  function populateTeeBoxSelect(teeBoxes) {
+    const teeBoxSelect = document.getElementById("tee-box-select");
+    teeBoxSelect.innerHTML = "";
+    const storedTeeBoxId = localStorage.getItem("teeBoxId") || 0;
+  
+    teeBoxes.forEach((teeBox, index) => {
+      const option = document.createElement("option");
+      option.value = index;
+      option.textContent = `${teeBox.teeType.toUpperCase()}, ${teeBox.totalYards} yards`;
+      teeBoxSelect.appendChild(option);
+    });
+  
+    teeBoxSelect.value = storedTeeBoxId;
+    teeBoxIndex = storedTeeBoxId;
+    populateScorecard();
+  }
+  
+  function handleTeeSelection(ev) {
+    teeBoxIndex = ev.target.value;
+    localStorage.setItem("teeBoxId", teeBoxIndex);
+    populateScorecard();
+  }
+  
+  async function populateScorecard() {
+    const details = await getGolfCourseDetails(currentCourseId);
+    const tbody = document.querySelector("#scorecard-container table tbody");
+    tbody.innerHTML = "";
+  
+    details.holes.forEach((hole, index) => {
+      const row = tbody.insertRow();
+      const teeBox = hole.teeBoxes[teeBoxIndex];
+      row.insertCell().textContent = index + 1;
+      row.insertCell().textContent = teeBox.yards;
+      row.insertCell().textContent = teeBox.hcp;
+      row.insertCell().textContent = teeBox.par;
+  
+      for (let i = 0; i < 4; i++) {
+        const cell = row.insertCell();
+        const input = document.createElement("input");
+        input.type = "number";
+        input.classList.add("form-control");
+        input.addEventListener("input", updatePlayerTotal);
+        cell.appendChild(input);
+  
+        if (index === 17) { 
+          const totalCell = tbody.rows[0].cells[i + 4].cloneNode(true);
+          totalCell.textContent = ""; 
+          cell.appendChild(totalCell);
+        }
+      }
+    });
