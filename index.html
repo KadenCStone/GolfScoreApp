@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="style.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="mt-4">Golf Scorecard App</h1>
+        
+        <div class="form-group">
+          <label for="course-select">Select a Course:</label>
+          <select id="course-select" class="form-control"></select>
+        </div>
+        
+        <div class="form-group">
+          <label for="tee-box-select">Select a Tee Box:</label>
+          <select id="tee-box-select" class="form-control"></select>
+        </div>
+        
+        <div id="scorecard-container">
+          <h2>Scorecard</h2>
+          <table class="table table-bordered">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Hole</th>
+                <th scope="col">Yardage</th>
+                <th scope="col">Handicap</th>
+                <th scope="col">Par</th>
+                <th scope="col"><input type="text" id="input-area" placeholder="Player 1"></th>
+                <th scope="col"><input type="text" id="input-area" placeholder="Player 2"></th>
+                <th scope="col"><input type="text" id="input-area" placeholder="Player 3"></th>
+                <th scope="col"><input type="text" id="input-area" placeholder="Player 4"></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div> 
+      </div>
+        
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <script src="main.js"></script>
+</body>
+</html>
